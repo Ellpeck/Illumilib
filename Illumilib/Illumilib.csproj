@@ -9,12 +9,14 @@
         <PackageProjectUrl>https://github.com/Ellpeck/Illumilib</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Ellpeck/Illumilib</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <VersionPrefix>1.1.0</VersionPrefix>
+        <VersionPrefix>1.1.1</VersionPrefix>
     </PropertyGroup>
 
     <ItemGroup>
         <None Update="LogitechLedEnginesWrapper.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>lib/$(TargetFramework)</PackagePath>
+            <Pack>true</Pack>
         </None>
     </ItemGroup>
 
