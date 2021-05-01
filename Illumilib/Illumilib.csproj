@@ -5,7 +5,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Authors>Ellpeck</Authors>
         <Description>A simple keyboard and mouse lighting library with support for Razer and Logitech devices</Description>
-        <PackageTags>lighting keyboard mouse lighting logitech lightsync razer chroma</PackageTags>
+        <PackageTags>lighting keyboard mouse logitech lightsync razer chroma</PackageTags>
         <PackageProjectUrl>https://github.com/Ellpeck/Illumilib</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Ellpeck/Illumilib</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
