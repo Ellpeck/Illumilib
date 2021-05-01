@@ -11,15 +11,19 @@ namespace Illumilib {
     public static class IllumilibLighting {
 
         private static List<LightingSystem> systems;
+        /// <summary>
+        /// A property that returns whether Illumilib is currently initialized
+        /// </summary>
+        public static bool Initialized => systems != null;
 
         /// <summary>
         /// Initializes Illumilib, starting all of the supported lighting systems.
         /// Any lighting systems that are not supported, or for which devices are not present, will be ignored.
         /// This function runs asynchronously. 
         /// </summary>
-        /// <exception cref="InvalidOperationException">Thrown if Illumilib has already been initialized</exception>
+        /// <exception cref="InvalidOperationException">Thrown if Illumilib has already been <see cref="Initialized"/></exception>
         public static async Task Initialize() {
-            if (systems != null)
+            if (Initialized)
                 throw new InvalidOperationException("Illumilib has already been initialized");
             var ret = new List<LightingSystem>();
             foreach (var system in new LightingSystem[] {new LogitechLighting(), new RazerLighting()}) {
@@ -33,6 +37,8 @@ namespace Illumilib {
         /// Disposes Illumilib, disposing all of the underlying lighting systems
         /// </summary>
         public static void Dispose() {
+            if (!Initialized)
+                return;
             ForEach(s => s.Dispose());
             systems = null;
         }
@@ -81,7 +87,7 @@ namespace Illumilib {
         }
 
         private static void ForEach(Action<LightingSystem> action) {
-            if (systems == null)
+            if (!Initialized)
                 throw new InvalidOperationException("Illumilib has not been initialized yet");
             foreach (var system in systems)
                 action(system);
