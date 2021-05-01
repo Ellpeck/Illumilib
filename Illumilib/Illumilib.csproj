@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Authors>Ellpeck</Authors>
+        <Description>A simple keyboard and mouse lighting library with support for Razer and Logitech devices</Description>
+        <PackageTags>lighting keyboard mouse lighting logitech lightsync razer chroma</PackageTags>
+        <PackageProjectUrl>https://github.com/Ellpeck/Illumilib</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Ellpeck/Illumilib</RepositoryUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <VersionPrefix>1.0.0</VersionPrefix>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Update="LogitechLedEnginesWrapper.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Colore" Version="6.0.0"/>
+    </ItemGroup>
+</Project>

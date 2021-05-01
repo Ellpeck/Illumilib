@@ -1,2 +1,2 @@
 # Illumilib
-A keyboard lighting .NET library
+A simple keyboard and mouse lighting library with support for Razer and Logitech devices
