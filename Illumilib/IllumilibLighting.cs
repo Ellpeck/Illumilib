@@ -72,10 +72,10 @@ namespace Illumilib {
         /// Sets the lighting for the specified <see cref="KeyboardKeys"/> to the given color.
         /// Only a single key can be specified at a time.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="r"></param>
-        /// <param name="g"></param>
-        /// <param name="b"></param>
+        /// <param name="key">The key value to set the lighting for</param>
+        /// <param name="r">The color's red value, between 0 and 1</param>
+        /// <param name="g">The color's green value, between 0 and 1</param>
+        /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetKeyLighting(KeyboardKeys key, float r, float g, float b) {
             ForEach(s => s.SetKeyLighting(key, r, g, b));
         }
