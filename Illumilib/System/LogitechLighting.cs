@@ -4,6 +4,9 @@ using Illumilib.Lib;
 namespace Illumilib.System {
     internal class LogitechLighting : LightingSystem {
 
+        private readonly byte[] bitmap = new byte[LogitechGsdk.LogiLedBitmapSize];
+        private bool bitmapDirty;
+
         public override Task<bool> Initialize() {
             try {
                 LogitechGsdk.LogiLedInit();
@@ -14,25 +17,65 @@ namespace Illumilib.System {
         }
 
         public override void Dispose() {
+            this.ClearBitmap();
             LogitechGsdk.LogiLedShutdown();
         }
 
         public override void SetAllLighting(float r, float g, float b) {
-            LogitechGsdk.LogiLedSetLighting((int) (r * 100F), (int) (g * 100F), (int) (b * 100F));
+            this.ClearBitmap();
+            LogitechGsdk.LogiLedSetLighting((int) (r * 100), (int) (g * 100), (int) (b * 100));
         }
 
         public override void SetKeyboardLighting(float r, float g, float b) {
-            for (var i = 0; i <= 3; i++)
-                LogitechGsdk.LogiLedSetLightingForTargetZone(DeviceType.Keyboard, i, (int) (r * 100F), (int) (g * 100F), (int) (b * 100F));
+            // setting keyboard zone lighting doesn't work for some keyboards, so we fill the bitmap instead
+            for (var x = 0; x < LogitechGsdk.LogiLedBitmapWidth; x++) {
+                for (var y = 0; y < LogitechGsdk.LogiLedBitmapHeight; y++)
+                    this.SetBitmapColor(x, y, r, g, b, 1);
+            }
+            LogitechGsdk.LogiLedSetLightingFromBitmap(this.bitmap);
+        }
+
+        public override void SetKeyboardLighting(int x, int y, float r, float g, float b) {
+            this.SetBitmapColor(x, y, r, g, b, 1);
+            LogitechGsdk.LogiLedSetLightingFromBitmap(this.bitmap);
+        }
+
+        public override void SetKeyboardLighting(int x, int y, int width, int height, float r, float g, float b) {
+            for (var xAdd = 0; xAdd < width; xAdd++) {
+                for (var yAdd = 0; yAdd < height; yAdd++)
+                    this.SetBitmapColor(x + xAdd, y + yAdd, r, g, b, 1);
+            }
+            LogitechGsdk.LogiLedSetLightingFromBitmap(this.bitmap);
+        }
+
+        public override void SetKeyboardLighting(KeyboardKeys key, float r, float g, float b) {
+            this.ClearBitmap();
+            LogitechGsdk.LogiLedSetLightingForKeyWithKeyName(ConvertKey(key), (int) (r * 100), (int) (g * 100), (int) (b * 100));
         }
 
         public override void SetMouseLighting(float r, float g, float b) {
             for (var i = 0; i <= 2; i++)
-                LogitechGsdk.LogiLedSetLightingForTargetZone(DeviceType.Mouse, i, (int) (r * 100F), (int) (g * 100F), (int) (b * 100F));
+                LogitechGsdk.LogiLedSetLightingForTargetZone(DeviceType.Mouse, i, (int) (r * 100), (int) (g * 100), (int) (b * 100));
         }
 
-        public override void SetKeyLighting(KeyboardKeys key, float r, float g, float b) {
-            LogitechGsdk.LogiLedSetLightingForKeyWithKeyName(ConvertKey(key), (int) (r * 100F), (int) (g * 100F), (int) (b * 100F));
+        private void SetBitmapColor(int x, int y, float r, float g, float b, float a) {
+            // since illumilib constants are a bit bigger than logi's constants, we need to make sure here
+            if (x >= LogitechGsdk.LogiLedBitmapWidth || y >= LogitechGsdk.LogiLedBitmapHeight)
+                return;
+            var i = LogitechGsdk.LogiLedBitmapBytesPerKey * (y * LogitechGsdk.LogiLedBitmapWidth + x);
+            this.bitmap[i + 0] = (byte) (b * 255);
+            this.bitmap[i + 1] = (byte) (g * 255);
+            this.bitmap[i + 2] = (byte) (r * 255);
+            this.bitmap[i + 3] = (byte) (a * 255);
+            this.bitmapDirty = true;
+        }
+
+        private void ClearBitmap() {
+            if (this.bitmapDirty) {
+                for (var i = 0; i < this.bitmap.Length; i++)
+                    this.bitmap[i] = 0;
+                this.bitmapDirty = false;
+            }
         }
 
         private static KeyboardNames ConvertKey(KeyboardKeys key) {

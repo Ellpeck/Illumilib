@@ -10,6 +10,15 @@ namespace Illumilib {
     /// </summary>
     public static class IllumilibLighting {
 
+        /// <summary>
+        /// The maximum width that a keyboard can have, in amount of keys
+        /// </summary>
+        public const int KeyboardWidth = 22;
+        /// <summary>
+        /// The maximum height that a keyboard can have, in amount of keys
+        /// </summary>
+        public const int KeyboardHeight = 6;
+
         private static List<LightingSystem> systems;
         /// <summary>
         /// A property that returns whether Illumilib is currently initialized
@@ -54,8 +63,7 @@ namespace Illumilib {
         }
 
         /// <summary>
-        /// Sets the lighting for all keyboards to the given color.
-        /// Note that, if Logitech is used, some keyboards do not support this method.
+        /// Sets the lighting for all keyboards to the given color
         /// </summary>
         /// <param name="r">The color's red value, between 0 and 1</param>
         /// <param name="g">The color's green value, between 0 and 1</param>
@@ -65,13 +73,42 @@ namespace Illumilib {
         }
 
         /// <summary>
-        /// Sets the lighting for all mice to the given color
+        /// Sets the lighting for the given x, y position on the keyboard to the given color.
+        /// The position is zero-based, with 0, 0 being in the top left corner of the keyboard.
         /// </summary>
+        /// <param name="x">The zero-based x position of the key</param>
+        /// <param name="y">The zero-based y position of the key</param>
         /// <param name="r">The color's red value, between 0 and 1</param>
         /// <param name="g">The color's green value, between 0 and 1</param>
         /// <param name="b">The color's blue value, between 0 and 1</param>
-        public static void SetMouseLighting(float r, float g, float b) {
-            ForEach(s => s.SetMouseLighting(r, g, b));
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the positions are out of range in relation to <see cref="KeyboardWidth"/> and <see cref="KeyboardHeight"/></exception>
+        public static void SetKeyboardLighting(int x, int y, float r, float g, float b) {
+            if (x < 0 || x >= KeyboardWidth)
+                throw new ArgumentOutOfRangeException(nameof(x));
+            if (y < 0 || y >= KeyboardHeight)
+                throw new ArgumentOutOfRangeException(nameof(y));
+            ForEach(s => s.SetKeyboardLighting(x, y, r, g, b));
+        }
+
+        /// <summary>
+        /// Sets the lighting in the given area on the keyboard to the given color.
+        /// The position is zero-based, with 0, 0 being in the top left corner of the keyboard.
+        /// The position is the top left corner of the rectangle that represents the area to set colors in.
+        /// </summary>
+        /// <param name="x">The zero-based x position of the key</param>
+        /// <param name="y">The zero-based y position of the key</param>
+        /// <param name="width">The width of the area to set the color in</param>
+        /// <param name="height">The height of the area to set the color in</param>
+        /// <param name="r">The color's red value, between 0 and 1</param>
+        /// <param name="g">The color's green value, between 0 and 1</param>
+        /// <param name="b">The color's blue value, between 0 and 1</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the positions are out of range in relation to <see cref="KeyboardWidth"/> and <see cref="KeyboardHeight"/></exception>
+        public static void SetKeyboardLighting(int x, int y, int width, int height, float r, float g, float b) {
+            if (x < 0 || x + width > KeyboardWidth)
+                throw new ArgumentOutOfRangeException(nameof(x));
+            if (y < 0 || y + height > KeyboardHeight)
+                throw new ArgumentOutOfRangeException(nameof(y));
+            ForEach(s => s.SetKeyboardLighting(x, y, width, height, r, g, b));
         }
 
         /// <summary>
@@ -82,8 +119,18 @@ namespace Illumilib {
         /// <param name="r">The color's red value, between 0 and 1</param>
         /// <param name="g">The color's green value, between 0 and 1</param>
         /// <param name="b">The color's blue value, between 0 and 1</param>
-        public static void SetKeyLighting(KeyboardKeys key, float r, float g, float b) {
-            ForEach(s => s.SetKeyLighting(key, r, g, b));
+        public static void SetKeyboardLighting(KeyboardKeys key, float r, float g, float b) {
+            ForEach(s => s.SetKeyboardLighting(key, r, g, b));
+        }
+
+        /// <summary>
+        /// Sets the lighting for all mice to the given color
+        /// </summary>
+        /// <param name="r">The color's red value, between 0 and 1</param>
+        /// <param name="g">The color's green value, between 0 and 1</param>
+        /// <param name="b">The color's blue value, between 0 and 1</param>
+        public static void SetMouseLighting(float r, float g, float b) {
+            ForEach(s => s.SetMouseLighting(r, g, b));
         }
 
         private static void ForEach(Action<LightingSystem> action) {
