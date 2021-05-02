@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Illumilib.System {
     internal abstract class LightingSystem : IDisposable {
 
-        public abstract Task<bool> Initialize();
+        public abstract bool Initialize();
 
         public abstract void Dispose();
 

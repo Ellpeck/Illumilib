@@ -28,18 +28,18 @@ namespace Illumilib {
         /// <summary>
         /// Initializes Illumilib, starting all of the supported lighting systems.
         /// Any lighting systems that are not supported, or for which devices are not present, will be ignored.
-        /// This function runs asynchronously. 
         /// </summary>
+        /// <returns>Whether at least one lighting system was successfully initialized</returns>
         /// <exception cref="InvalidOperationException">Thrown if Illumilib has already been <see cref="Initialized"/></exception>
-        public static async Task Initialize() {
+        public static bool Initialize() {
             if (Initialized)
                 throw new InvalidOperationException("Illumilib has already been initialized");
-            var ret = new List<LightingSystem>();
+            systems = new List<LightingSystem>();
             foreach (var system in new LightingSystem[] {new LogitechLighting(), new RazerLighting()}) {
-                if (await system.Initialize())
-                    ret.Add(system);
+                if (system.Initialize())
+                    systems.Add(system);
             }
-            systems = ret;
+            return systems.Count > 0;
         }
 
         /// <summary>

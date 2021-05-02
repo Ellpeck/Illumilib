@@ -7,12 +7,12 @@ namespace Illumilib.System {
         private readonly byte[] bitmap = new byte[LogitechGsdk.LogiLedBitmapSize];
         private bool bitmapDirty;
 
-        public override Task<bool> Initialize() {
+        public override bool Initialize() {
             try {
                 LogitechGsdk.LogiLedInit();
-                return Task.FromResult(true);
+                return true;
             } catch {
-                return Task.FromResult(false);
+                return false;
             }
         }
 

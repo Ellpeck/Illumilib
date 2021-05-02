@@ -6,8 +6,8 @@ using Illumilib;
 namespace Demo {
     internal static class Program {
 
-        private static async Task Main(string[] args) {
-            await IllumilibLighting.Initialize();
+        private static void Main(string[] args) {
+            IllumilibLighting.Initialize();
 
             Console.WriteLine("Setting specific positions");
             IllumilibLighting.SetKeyboardLighting(0, 1, 0);

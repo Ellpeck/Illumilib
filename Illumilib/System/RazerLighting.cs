@@ -10,9 +10,9 @@ namespace Illumilib.System {
         private CustomKeyboardEffect effect = new CustomKeyboardEffect(Color.Black);
         private bool effectOutdated;
 
-        public override async Task<bool> Initialize() {
+        public override bool Initialize() {
             try {
-                this.chroma = await ColoreProvider.CreateNativeAsync();
+                this.chroma = ColoreProvider.CreateNativeAsync().Result;
                 return true;
             } catch {
                 return false;
