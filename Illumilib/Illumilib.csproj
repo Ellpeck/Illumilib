@@ -9,7 +9,7 @@
         <PackageProjectUrl>https://github.com/Ellpeck/Illumilib</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Ellpeck/Illumilib</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <VersionPrefix>1.1.1</VersionPrefix>
+        <VersionPrefix>1.2.0</VersionPrefix>
     </PropertyGroup>
 
     <ItemGroup>
