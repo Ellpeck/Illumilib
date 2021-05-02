@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Illumilib.Lib;
+﻿using Illumilib.Lib;
 
 namespace Illumilib.System {
     internal class LogitechLighting : LightingSystem {

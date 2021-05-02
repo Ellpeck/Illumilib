@@ -1,4 +1,4 @@
 # Illumilib
-A simple keyboard and mouse lighting library with support for Razer and Logitech devices.
+A simple keyboard and mouse lighting library with support for Razer, Logitech and Corsair devices.
 
 See the [Demo](https://github.com/Ellpeck/Illumilib/blob/main/Demo/Program.cs) to check out the features, or the [IllumilibLighting](https://github.com/Ellpeck/Illumilib/blob/main/Illumilib/IllumilibLighting.cs) class for API documentation.

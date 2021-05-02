@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Colore;
+﻿using Colore;
 using Colore.Data;
 using Colore.Effects.Keyboard;
 

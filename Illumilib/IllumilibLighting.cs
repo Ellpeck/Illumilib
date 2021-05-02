@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Illumilib.System;
 
 namespace Illumilib {
@@ -35,7 +34,7 @@ namespace Illumilib {
             if (Initialized)
                 throw new InvalidOperationException("Illumilib has already been initialized");
             systems = new List<LightingSystem>();
-            foreach (var system in new LightingSystem[] {new LogitechLighting(), new RazerLighting()}) {
+            foreach (var system in new LightingSystem[] {new LogitechLighting(), new RazerLighting(), new CorsairLighting()}) {
                 if (system.Initialize())
                     systems.Add(system);
             }
@@ -74,7 +73,7 @@ namespace Illumilib {
 
         /// <summary>
         /// Sets the lighting for the given x, y position on the keyboard to the given color.
-        /// The position is zero-based, with 0, 0 being in the top left corner of the keyboard.
+        /// The position is zero-based, with 0, 0 being the key in the top left corner of the keyboard.
         /// </summary>
         /// <param name="x">The zero-based x position of the key</param>
         /// <param name="y">The zero-based y position of the key</param>
@@ -92,7 +91,7 @@ namespace Illumilib {
 
         /// <summary>
         /// Sets the lighting in the given area on the keyboard to the given color.
-        /// The position is zero-based, with 0, 0 being in the top left corner of the keyboard.
+        /// The position is zero-based, with 0, 0 being the key in the top left corner of the keyboard.
         /// The position is the top left corner of the rectangle that represents the area to set colors in.
         /// </summary>
         /// <param name="x">The zero-based x position of the key</param>
