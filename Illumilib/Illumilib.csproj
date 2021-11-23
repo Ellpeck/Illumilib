@@ -9,6 +9,8 @@
         <PackageProjectUrl>https://github.com/Ellpeck/Illumilib</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Ellpeck/Illumilib</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>Logo.png</PackageIcon>
         <VersionPrefix>1.2.1</VersionPrefix>
     </PropertyGroup>
 
@@ -17,6 +19,8 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackagePath>runtimes</PackagePath>
         </Content>
+        <None Include="../README.md" Pack="true" PackagePath="" />
+        <None Include="../Logo.png" Pack="true" PackagePath="" />
     </ItemGroup>
 
     <ItemGroup>
