@@ -5,6 +5,8 @@ using Colore.Effects.Keyboard;
 namespace Illumilib.System {
     internal class RazerLighting : LightingSystem {
 
+        public override LightingType Type => LightingType.Razer;
+
         private IChroma chroma;
         private CustomKeyboardEffect effect = new CustomKeyboardEffect(Color.Black);
         private bool effectOutdated;

@@ -18,7 +18,7 @@ namespace Illumilib {
         /// </summary>
         public const int KeyboardHeight = 6;
 
-        private static List<LightingSystem> systems;
+        private static Dictionary<LightingType, LightingSystem> systems;
         /// <summary>
         /// A property that returns whether Illumilib is currently initialized
         /// </summary>
@@ -33,10 +33,10 @@ namespace Illumilib {
         public static bool Initialize() {
             if (Initialized)
                 throw new InvalidOperationException("Illumilib has already been initialized");
-            systems = new List<LightingSystem>();
+            systems = new Dictionary<LightingType, LightingSystem>();
             foreach (var system in new LightingSystem[] {new LogitechLighting(), new RazerLighting(), new CorsairLighting()}) {
                 if (system.Initialize())
-                    systems.Add(system);
+                    systems.Add(system.Type, system);
             }
             return systems.Count > 0;
         }
@@ -47,9 +47,19 @@ namespace Illumilib {
         public static void Dispose() {
             if (!Initialized)
                 return;
-            foreach (var system in systems)
+            foreach (var system in systems.Values)
                 system.Dispose();
             systems = null;
+        }
+
+        /// <summary>
+        /// Returns whether the given <see cref="LightingType"/> has been initialized successfully and is enabled.
+        /// </summary>
+        /// <param name="type">The <see cref="LightingType"/> to query.</param>
+        /// <returns>Whether the given <see cref="LightingType"/> has been initialized and is enabled.</returns>
+        public static bool IsEnabled(LightingType type) {
+            EnsureInitialized();
+            return systems.ContainsKey(type);
         }
 
         /// <summary>
@@ -60,7 +70,7 @@ namespace Illumilib {
         /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetAllLighting(float r, float g, float b) {
             EnsureInitialized();
-            foreach (var system in systems)
+            foreach (var system in systems.Values)
                 system.SetAllLighting(r, g, b);
         }
 
@@ -72,7 +82,7 @@ namespace Illumilib {
         /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetKeyboardLighting(float r, float g, float b) {
             EnsureInitialized();
-            foreach (var system in systems)
+            foreach (var system in systems.Values)
                 system.SetKeyboardLighting(r, g, b);
         }
 
@@ -92,7 +102,7 @@ namespace Illumilib {
                 throw new ArgumentOutOfRangeException(nameof(x));
             if (y < 0 || y >= KeyboardHeight)
                 throw new ArgumentOutOfRangeException(nameof(y));
-            foreach (var system in systems)
+            foreach (var system in systems.Values)
                 system.SetKeyboardLighting(x, y, r, g, b);
         }
 
@@ -115,7 +125,7 @@ namespace Illumilib {
                 throw new ArgumentOutOfRangeException(nameof(x));
             if (y < 0 || y + height > KeyboardHeight)
                 throw new ArgumentOutOfRangeException(nameof(y));
-            foreach (var system in systems)
+            foreach (var system in systems.Values)
                 system.SetKeyboardLighting(x, y, width, height, r, g, b);
         }
 
@@ -129,7 +139,7 @@ namespace Illumilib {
         /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetKeyboardLighting(KeyboardKeys key, float r, float g, float b) {
             EnsureInitialized();
-            foreach (var system in systems)
+            foreach (var system in systems.Values)
                 system.SetKeyboardLighting(key, r, g, b);
         }
 
@@ -141,7 +151,7 @@ namespace Illumilib {
         /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetMouseLighting(float r, float g, float b) {
             EnsureInitialized();
-            foreach (var system in systems)
+            foreach (var system in systems.Values)
                 system.SetMouseLighting(r, g, b);
         }
 

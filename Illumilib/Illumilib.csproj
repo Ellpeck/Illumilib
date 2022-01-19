@@ -12,6 +12,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>Logo.png</PackageIcon>
         <VersionPrefix>1.2.2</VersionPrefix>
+        <NoWarn>NU1701</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -24,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Colore" Version="6.0.0"/>
-        <PackageReference Include="CUESDK.NET" Version="3.0.361.2"/>
+        <PackageReference Include="Colore" Version="6.0.0" />
+        <PackageReference Include="CUESDK.NET" Version="3.0.361.2" />
     </ItemGroup>
 </Project>

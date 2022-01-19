@@ -5,6 +5,8 @@ using Corsair.CUE.SDK;
 namespace Illumilib.System {
     internal class CorsairLighting : LightingSystem {
 
+        public override LightingType Type => LightingType.Corsair;
+
         private DeviceInfo[] devices;
 
         public override bool Initialize() {

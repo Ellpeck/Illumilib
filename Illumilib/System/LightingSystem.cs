@@ -3,6 +3,8 @@
 namespace Illumilib.System {
     internal abstract class LightingSystem : IDisposable {
 
+        public abstract LightingType Type { get; }
+
         public abstract bool Initialize();
 
         public abstract void Dispose();

@@ -3,6 +3,8 @@
 namespace Illumilib.System {
     internal class LogitechLighting : LightingSystem {
 
+        public override LightingType Type => LightingType.Logitech;
+
         private readonly byte[] bitmap = new byte[LogitechGsdk.LogiLedBitmapSize];
         private bool bitmapDirty;
 

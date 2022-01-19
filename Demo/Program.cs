@@ -8,6 +8,11 @@ namespace Demo {
         private static void Main(string[] args) {
             IllumilibLighting.Initialize();
 
+            foreach (var type in Enum.GetValues<LightingType>()) {
+                if (IllumilibLighting.IsEnabled(type))
+                    Console.WriteLine($"{type} lighting is enabled");
+            }
+
             Console.WriteLine("Setting all lights to blue");
             IllumilibLighting.SetAllLighting(r: 0, g: 0, b: 1);
             Thread.Sleep(TimeSpan.FromSeconds(3));
