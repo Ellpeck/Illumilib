@@ -47,7 +47,8 @@ namespace Illumilib {
         public static void Dispose() {
             if (!Initialized)
                 return;
-            ForEach(s => s.Dispose());
+            foreach (var system in systems)
+                system.Dispose();
             systems = null;
         }
 
@@ -58,7 +59,9 @@ namespace Illumilib {
         /// <param name="g">The color's green value, between 0 and 1</param>
         /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetAllLighting(float r, float g, float b) {
-            ForEach(s => s.SetAllLighting(r, g, b));
+            EnsureInitialized();
+            foreach (var system in systems)
+                system.SetAllLighting(r, g, b);
         }
 
         /// <summary>
@@ -68,7 +71,9 @@ namespace Illumilib {
         /// <param name="g">The color's green value, between 0 and 1</param>
         /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetKeyboardLighting(float r, float g, float b) {
-            ForEach(s => s.SetKeyboardLighting(r, g, b));
+            EnsureInitialized();
+            foreach (var system in systems)
+                system.SetKeyboardLighting(r, g, b);
         }
 
         /// <summary>
@@ -82,11 +87,13 @@ namespace Illumilib {
         /// <param name="b">The color's blue value, between 0 and 1</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if the positions are out of range in relation to <see cref="KeyboardWidth"/> and <see cref="KeyboardHeight"/></exception>
         public static void SetKeyboardLighting(int x, int y, float r, float g, float b) {
+            EnsureInitialized();
             if (x < 0 || x >= KeyboardWidth)
                 throw new ArgumentOutOfRangeException(nameof(x));
             if (y < 0 || y >= KeyboardHeight)
                 throw new ArgumentOutOfRangeException(nameof(y));
-            ForEach(s => s.SetKeyboardLighting(x, y, r, g, b));
+            foreach (var system in systems)
+                system.SetKeyboardLighting(x, y, r, g, b);
         }
 
         /// <summary>
@@ -103,11 +110,13 @@ namespace Illumilib {
         /// <param name="b">The color's blue value, between 0 and 1</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if the positions are out of range in relation to <see cref="KeyboardWidth"/> and <see cref="KeyboardHeight"/></exception>
         public static void SetKeyboardLighting(int x, int y, int width, int height, float r, float g, float b) {
+            EnsureInitialized();
             if (x < 0 || x + width > KeyboardWidth)
                 throw new ArgumentOutOfRangeException(nameof(x));
             if (y < 0 || y + height > KeyboardHeight)
                 throw new ArgumentOutOfRangeException(nameof(y));
-            ForEach(s => s.SetKeyboardLighting(x, y, width, height, r, g, b));
+            foreach (var system in systems)
+                system.SetKeyboardLighting(x, y, width, height, r, g, b);
         }
 
         /// <summary>
@@ -119,7 +128,9 @@ namespace Illumilib {
         /// <param name="g">The color's green value, between 0 and 1</param>
         /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetKeyboardLighting(KeyboardKeys key, float r, float g, float b) {
-            ForEach(s => s.SetKeyboardLighting(key, r, g, b));
+            EnsureInitialized();
+            foreach (var system in systems)
+                system.SetKeyboardLighting(key, r, g, b);
         }
 
         /// <summary>
@@ -129,14 +140,14 @@ namespace Illumilib {
         /// <param name="g">The color's green value, between 0 and 1</param>
         /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetMouseLighting(float r, float g, float b) {
-            ForEach(s => s.SetMouseLighting(r, g, b));
+            EnsureInitialized();
+            foreach (var system in systems)
+                system.SetMouseLighting(r, g, b);
         }
 
-        private static void ForEach(Action<LightingSystem> action) {
+        private static void EnsureInitialized() {
             if (!Initialized)
                 throw new InvalidOperationException("Illumilib has not been initialized yet");
-            foreach (var system in systems)
-                action(system);
         }
 
     }
