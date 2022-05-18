@@ -26,10 +26,6 @@ namespace Illumilib.System {
             }
         }
 
-        public override void Dispose() {
-            // no op
-        }
-
         public override void SetAllLighting(float r, float g, float b) {
             foreach (var device in this.devices) {
                 device.SetAllColors(r, g, b);

@@ -5,9 +5,11 @@ namespace Illumilib.System {
 
         public abstract LightingType Type { get; }
 
-        public abstract bool Initialize();
+        ~LightingSystem() {
+            this.Dispose();
+        }
 
-        public abstract void Dispose();
+        public abstract bool Initialize();
 
         public abstract void SetAllLighting(float r, float g, float b);
 
@@ -20,6 +22,10 @@ namespace Illumilib.System {
         public abstract void SetKeyboardLighting(KeyboardKeys key, float r, float g, float b);
 
         public abstract void SetMouseLighting(float r, float g, float b);
+
+        public virtual void Dispose() {
+            GC.SuppressFinalize(this);
+        }
 
     }
 }
