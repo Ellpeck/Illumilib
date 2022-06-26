@@ -22,7 +22,7 @@ namespace Illumilib.System {
 
         public override void Dispose() {
             base.Dispose();
-            this.chroma.UninitializeAsync();
+            this.chroma?.UninitializeAsync();
             this.effectOutdated = true;
         }
 
