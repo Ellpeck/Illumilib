@@ -138,16 +138,16 @@ namespace Illumilib.Lib {
         private const int LogiDevicetypeRgbOrd = 1;
         private const int LogiDevicetypePerkeyRgbOrd = 2;
 
-        public const int LogiDevicetypeMonochrome = (1 << LogiDevicetypeMonochromeOrd);
-        public const int LogiDevicetypeRgb = (1 << LogiDevicetypeRgbOrd);
-        public const int LogiDevicetypePerkeyRgb = (1 << LogiDevicetypePerkeyRgbOrd);
-        public const int LogiDevicetypeAll = (LogiDevicetypeMonochrome | LogiDevicetypeRgb | LogiDevicetypePerkeyRgb);
+        public const int LogiDevicetypeMonochrome = 1 << LogitechGsdk.LogiDevicetypeMonochromeOrd;
+        public const int LogiDevicetypeRgb = 1 << LogitechGsdk.LogiDevicetypeRgbOrd;
+        public const int LogiDevicetypePerkeyRgb = 1 << LogitechGsdk.LogiDevicetypePerkeyRgbOrd;
+        public const int LogiDevicetypeAll = LogitechGsdk.LogiDevicetypeMonochrome | LogitechGsdk.LogiDevicetypeRgb | LogitechGsdk.LogiDevicetypePerkeyRgb;
 
         public const int LogiLedBitmapWidth = 21;
         public const int LogiLedBitmapHeight = 6;
         public const int LogiLedBitmapBytesPerKey = 4;
 
-        public const int LogiLedBitmapSize = LogiLedBitmapWidth * LogiLedBitmapHeight * LogiLedBitmapBytesPerKey;
+        public const int LogiLedBitmapSize = LogitechGsdk.LogiLedBitmapWidth * LogitechGsdk.LogiLedBitmapHeight * LogitechGsdk.LogiLedBitmapBytesPerKey;
         public const int LogiLedDurationInfinite = 0;
 
         [DllImport("LogitechLedEnginesWrapper ", CallingConvention = CallingConvention.Cdecl)]

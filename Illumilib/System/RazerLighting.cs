@@ -59,7 +59,7 @@ namespace Illumilib.System {
         }
 
         public override void SetKeyboardLighting(KeyboardKeys key, float r, float g, float b) {
-            this.chroma.Keyboard?.SetKeyAsync(ConvertKey(key), new Color(r, g, b));
+            this.chroma.Keyboard?.SetKeyAsync(RazerLighting.ConvertKey(key), new Color(r, g, b));
             this.effectOutdated = true;
         }
 

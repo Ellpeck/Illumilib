@@ -75,7 +75,7 @@ namespace Illumilib.System {
         }
 
         public override void SetKeyboardLighting(KeyboardKeys key, float r, float g, float b) {
-            var id = ConvertKey(key);
+            var id = CorsairLighting.ConvertKey(key);
             foreach (var device in this.devices) {
                 if (!device.IsKeyboard())
                     continue;
@@ -344,12 +344,12 @@ namespace Illumilib.System {
 
             public void SetAllColors(float r, float g, float b) {
                 foreach (var color in this.colors)
-                    SetColor(color, r, g, b);
+                    DeviceInfo.SetColor(color, r, g, b);
             }
 
             public bool SetColorForId(CorsairLedId id, float r, float g, float b) {
                 if (this.ledIdToColorIndex.TryGetValue(id, out var index)) {
-                    SetColor(this.colors[index], r, g, b);
+                    DeviceInfo.SetColor(this.colors[index], r, g, b);
                     return true;
                 }
                 return false;

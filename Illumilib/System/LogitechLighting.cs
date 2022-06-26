@@ -52,7 +52,7 @@ namespace Illumilib.System {
 
         public override void SetKeyboardLighting(KeyboardKeys key, float r, float g, float b) {
             this.ClearBitmap();
-            LogitechGsdk.LogiLedSetLightingForKeyWithKeyName(ConvertKey(key), (int) (r * 100), (int) (g * 100), (int) (b * 100));
+            LogitechGsdk.LogiLedSetLightingForKeyWithKeyName(LogitechLighting.ConvertKey(key), (int) (r * 100), (int) (g * 100), (int) (b * 100));
         }
 
         public override void SetMouseLighting(float r, float g, float b) {

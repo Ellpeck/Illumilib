@@ -22,7 +22,7 @@ namespace Illumilib {
         /// <summary>
         /// A property that returns whether Illumilib is currently initialized
         /// </summary>
-        public static bool Initialized => systems != null;
+        public static bool Initialized => IllumilibLighting.systems != null;
 
         /// <summary>
         /// Initializes Illumilib, starting all of the supported lighting systems.
@@ -31,25 +31,25 @@ namespace Illumilib {
         /// <returns>Whether at least one lighting system was successfully initialized</returns>
         /// <exception cref="InvalidOperationException">Thrown if Illumilib has already been <see cref="Initialized"/></exception>
         public static bool Initialize() {
-            if (Initialized)
+            if (IllumilibLighting.Initialized)
                 throw new InvalidOperationException("Illumilib has already been initialized");
-            systems = new Dictionary<LightingType, LightingSystem>();
+            IllumilibLighting.systems = new Dictionary<LightingType, LightingSystem>();
             foreach (var system in new LightingSystem[] {new LogitechLighting(), new RazerLighting(), new CorsairLighting()}) {
                 if (system.Initialize())
-                    systems.Add(system.Type, system);
+                    IllumilibLighting.systems.Add(system.Type, system);
             }
-            return systems.Count > 0;
+            return IllumilibLighting.systems.Count > 0;
         }
 
         /// <summary>
         /// Disposes Illumilib, disposing all of the underlying lighting systems
         /// </summary>
         public static void Dispose() {
-            if (!Initialized)
+            if (!IllumilibLighting.Initialized)
                 return;
-            foreach (var system in systems.Values)
+            foreach (var system in IllumilibLighting.systems.Values)
                 system.Dispose();
-            systems = null;
+            IllumilibLighting.systems = null;
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Illumilib {
         /// <param name="type">The <see cref="LightingType"/> to query.</param>
         /// <returns>Whether the given <see cref="LightingType"/> has been initialized and is enabled.</returns>
         public static bool IsEnabled(LightingType type) {
-            EnsureInitialized();
-            return systems.ContainsKey(type);
+            IllumilibLighting.EnsureInitialized();
+            return IllumilibLighting.systems.ContainsKey(type);
         }
 
         /// <summary>
@@ -69,8 +69,8 @@ namespace Illumilib {
         /// <param name="g">The color's green value, between 0 and 1</param>
         /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetAllLighting(float r, float g, float b) {
-            EnsureInitialized();
-            foreach (var system in systems.Values)
+            IllumilibLighting.EnsureInitialized();
+            foreach (var system in IllumilibLighting.systems.Values)
                 system.SetAllLighting(r, g, b);
         }
 
@@ -81,8 +81,8 @@ namespace Illumilib {
         /// <param name="g">The color's green value, between 0 and 1</param>
         /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetKeyboardLighting(float r, float g, float b) {
-            EnsureInitialized();
-            foreach (var system in systems.Values)
+            IllumilibLighting.EnsureInitialized();
+            foreach (var system in IllumilibLighting.systems.Values)
                 system.SetKeyboardLighting(r, g, b);
         }
 
@@ -97,12 +97,12 @@ namespace Illumilib {
         /// <param name="b">The color's blue value, between 0 and 1</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if the positions are out of range in relation to <see cref="KeyboardWidth"/> and <see cref="KeyboardHeight"/></exception>
         public static void SetKeyboardLighting(int x, int y, float r, float g, float b) {
-            EnsureInitialized();
-            if (x < 0 || x >= KeyboardWidth)
+            IllumilibLighting.EnsureInitialized();
+            if (x < 0 || x >= IllumilibLighting.KeyboardWidth)
                 throw new ArgumentOutOfRangeException(nameof(x));
-            if (y < 0 || y >= KeyboardHeight)
+            if (y < 0 || y >= IllumilibLighting.KeyboardHeight)
                 throw new ArgumentOutOfRangeException(nameof(y));
-            foreach (var system in systems.Values)
+            foreach (var system in IllumilibLighting.systems.Values)
                 system.SetKeyboardLighting(x, y, r, g, b);
         }
 
@@ -120,12 +120,12 @@ namespace Illumilib {
         /// <param name="b">The color's blue value, between 0 and 1</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if the positions are out of range in relation to <see cref="KeyboardWidth"/> and <see cref="KeyboardHeight"/></exception>
         public static void SetKeyboardLighting(int x, int y, int width, int height, float r, float g, float b) {
-            EnsureInitialized();
-            if (x < 0 || x + width > KeyboardWidth)
+            IllumilibLighting.EnsureInitialized();
+            if (x < 0 || x + width > IllumilibLighting.KeyboardWidth)
                 throw new ArgumentOutOfRangeException(nameof(x));
-            if (y < 0 || y + height > KeyboardHeight)
+            if (y < 0 || y + height > IllumilibLighting.KeyboardHeight)
                 throw new ArgumentOutOfRangeException(nameof(y));
-            foreach (var system in systems.Values)
+            foreach (var system in IllumilibLighting.systems.Values)
                 system.SetKeyboardLighting(x, y, width, height, r, g, b);
         }
 
@@ -138,8 +138,8 @@ namespace Illumilib {
         /// <param name="g">The color's green value, between 0 and 1</param>
         /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetKeyboardLighting(KeyboardKeys key, float r, float g, float b) {
-            EnsureInitialized();
-            foreach (var system in systems.Values)
+            IllumilibLighting.EnsureInitialized();
+            foreach (var system in IllumilibLighting.systems.Values)
                 system.SetKeyboardLighting(key, r, g, b);
         }
 
@@ -150,13 +150,13 @@ namespace Illumilib {
         /// <param name="g">The color's green value, between 0 and 1</param>
         /// <param name="b">The color's blue value, between 0 and 1</param>
         public static void SetMouseLighting(float r, float g, float b) {
-            EnsureInitialized();
-            foreach (var system in systems.Values)
+            IllumilibLighting.EnsureInitialized();
+            foreach (var system in IllumilibLighting.systems.Values)
                 system.SetMouseLighting(r, g, b);
         }
 
         private static void EnsureInitialized() {
-            if (!Initialized)
+            if (!IllumilibLighting.Initialized)
                 throw new InvalidOperationException("Illumilib has not been initialized yet");
         }
 

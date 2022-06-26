@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+    
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -14,7 +14,7 @@
         <VersionPrefix>1.2.4</VersionPrefix>
         <NoWarn>NU1701</NoWarn>
     </PropertyGroup>
-
+    
     <ItemGroup>
         <Content Include="runtimes\**">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -23,7 +23,7 @@
         <None Include="../README.md" Pack="true" PackagePath="" />
         <None Include="../Logo.png" Pack="true" PackagePath="" />
     </ItemGroup>
-
+    
     <ItemGroup>
         <PackageReference Include="Colore" Version="6.0.0" />
         <PackageReference Include="CUESDK.NET" Version="3.0.361.2" />
