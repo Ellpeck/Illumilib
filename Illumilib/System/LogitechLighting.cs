@@ -20,7 +20,11 @@ namespace Illumilib.System {
         public override void Dispose() {
             base.Dispose();
             this.ClearBitmap();
-            LogitechGsdk.LogiLedShutdown();
+            try {
+                LogitechGsdk.LogiLedShutdown();
+            } catch {
+                // ignored
+            }
         }
 
         public override void SetAllLighting(float r, float g, float b) {
