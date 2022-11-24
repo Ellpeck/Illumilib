@@ -20,31 +20,31 @@ namespace Illumilib.System {
             }
         }
 
-        public override void Dispose() {
+        public override async void Dispose() {
             try {
-                this.chroma?.UninitializeAsync();
+                await this.chroma?.UninitializeAsync();
             } catch {
                 // ignored
             }
             this.effectOutdated = true;
         }
 
-        public override void SetAllLighting(float r, float g, float b) {
-            this.chroma.SetAllAsync(new Color(r, g, b));
+        public override async void SetAllLighting(float r, float g, float b) {
+            await this.chroma.SetAllAsync(new Color(r, g, b));
             this.effectOutdated = true;
         }
 
-        public override void SetKeyboardLighting(float r, float g, float b) {
-            this.chroma.Keyboard?.SetAllAsync(new Color(r, g, b));
+        public override async void SetKeyboardLighting(float r, float g, float b) {
+            await this.chroma.Keyboard?.SetAllAsync(new Color(r, g, b));
             this.effectOutdated = true;
         }
 
-        public override void SetKeyboardLighting(int x, int y, float r, float g, float b) {
-            this.chroma.Keyboard?.SetPositionAsync(y, x, new Color(r, g, b));
+        public override async void SetKeyboardLighting(int x, int y, float r, float g, float b) {
+            await this.chroma.Keyboard?.SetPositionAsync(y, x, new Color(r, g, b));
             this.effectOutdated = true;
         }
 
-        public override void SetKeyboardLighting(int x, int y, int width, int height, float r, float g, float b) {
+        public override async void SetKeyboardLighting(int x, int y, int width, int height, float r, float g, float b) {
             if (this.chroma.Keyboard == null)
                 return;
             if (this.effectOutdated) {
@@ -58,16 +58,16 @@ namespace Illumilib.System {
                 for (var yAdd = 0; yAdd < height; yAdd++)
                     this.effect[y + yAdd, x + xAdd] = new Color(r, g, b);
             }
-            this.chroma.Keyboard.SetCustomAsync(this.effect);
+            await this.chroma.Keyboard.SetCustomAsync(this.effect);
         }
 
-        public override void SetKeyboardLighting(KeyboardKeys key, float r, float g, float b) {
-            this.chroma.Keyboard?.SetKeyAsync(RazerLighting.ConvertKey(key), new Color(r, g, b));
+        public override async void SetKeyboardLighting(KeyboardKeys key, float r, float g, float b) {
+            await this.chroma.Keyboard?.SetKeyAsync(RazerLighting.ConvertKey(key), new Color(r, g, b));
             this.effectOutdated = true;
         }
 
-        public override void SetMouseLighting(float r, float g, float b) {
-            this.chroma.Mouse?.SetAllAsync(new Color(r, g, b));
+        public override async void SetMouseLighting(float r, float g, float b) {
+            await this.chroma.Mouse?.SetAllAsync(new Color(r, g, b));
         }
 
         private static Key ConvertKey(KeyboardKeys key) {
