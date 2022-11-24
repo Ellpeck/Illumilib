@@ -21,7 +21,6 @@ namespace Illumilib.System {
         }
 
         public override void Dispose() {
-            base.Dispose();
             try {
                 this.chroma?.UninitializeAsync();
             } catch {
